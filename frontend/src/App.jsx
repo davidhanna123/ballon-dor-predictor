@@ -1,34 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import Table from './components/Table';
+ 
 
 function App() {
   const [players, setPlayers] = useState([]);
+  const [simulationResults, setSimulationResults] = useState([]);
   const location = useLocation();
 
-  const generateMockResults = () => {
-    return [
-      { name: 'Lionel Messi', goals: 35, assists: 14, minutes: 3200, trophies: 3, score: 95.6 },
-      { name: 'Erling Haaland', goals: 42, assists: 7, minutes: 3100, trophies: 2, score: 93.4 },
-      { name: 'Kylian Mbappé', goals: 38, assists: 10, minutes: 3000, trophies: 2, score: 91.2 },
-      { name: 'Jude Bellingham', goals: 18, assists: 12, minutes: 2900, trophies: 3, score: 89.1 },
-      { name: 'Vinícius Jr', goals: 20, assists: 16, minutes: 2800, trophies: 2, score: 87.5 },
-      { name: 'Kevin De Bruyne', goals: 9, assists: 20, minutes: 2700, trophies: 2, score: 86.3 },
-      { name: 'Robert Lewandowski', goals: 33, assists: 5, minutes: 3100, trophies: 1, score: 85.4 },
-      { name: 'Harry Kane', goals: 36, assists: 8, minutes: 3000, trophies: 1, score: 84.8 },
-      { name: 'Mohamed Salah', goals: 28, assists: 11, minutes: 2900, trophies: 1, score: 84.3 },
-      { name: 'Cristiano Ronaldo', goals: 31, assists: 4, minutes: 3100, trophies: 0, score: 82.1 },
-    ];
-  };
-
-  const regenerateResults = () => {
-    setPlayers(generateMockResults());
+  const fetchSimulationResults = () => {
+    fetch('http://127.0.0.1:5000/simulate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((response) => response.json())
+      .then((data) => setSimulationResults(data))
+      .catch((error) => console.error('Error:', error));
   };
 
   useEffect(() => {
-    
     if (location.state?.generate) {
-      regenerateResults();
+      fetchSimulationResults();
     }
   }, [location.state]);
 
@@ -37,7 +28,7 @@ function App() {
       <h1>🏆 Ballon d'Or Predictor</h1>
 
       <button
-        onClick={regenerateResults}
+        onClick={fetchSimulationResults}
         style={{
           padding: '0.5rem 1.2rem',
           fontSize: '16px',
@@ -45,10 +36,32 @@ function App() {
           cursor: 'pointer',
         }}
       >
-        🔄 Regenerate Results
+        🔄 Simulate Ballon d'Or
       </button>
 
-      <Table players={players} />
+      {simulationResults.length > 0 && (
+        <div style={{ marginTop: '2rem' }}>
+          <h2>Simulation Results</h2>
+          <table border="1" cellPadding="10" style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr>
+                <th>Player</th>
+                <th>Simulated Wins</th>
+                <th>Win Probability (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {simulationResults.map((result, index) => (
+                <tr key={index}>
+                  <td>{result.Player}</td>
+                  <td>{result["Simulated Wins"]}</td>
+                  <td>{result["Win Probability (%)"]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
