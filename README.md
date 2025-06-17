@@ -21,23 +21,24 @@ The Ballon d'Or Predictor is a web application that simulates the probability of
 
 ### Backend Setup
 1. Navigate to the `backend` directory:
-   ```bash
+   ```
    cd backend
    ```
 
 2. Create and activate a virtual environment:
 On macOS/Linux:
-    ```python3 -m venv venv
+    ```
+    python3 -m venv venv
     source venv/bin/activate
    ```
 On Windows:
-    ```python3 -m venv venv
+    ```
+    python3 -m venv venv
     venv\Scripts\activate
    ```
 
 3. Install the required dependencies:
-    ```pip install -r requirements.txt
-    ```
+    ```pip install -r requirements.txt```
 
 4. Start the Flask backend:
     ```python app.py```
@@ -75,10 +76,6 @@ On Windows:
 
 - **Dependency Issues**:
   - If you encounter missing packages, ensure they are installed in the virtual environment:
-    ```bash
-    pip install -r requirements.txt
-    ```
+    ```pip install -r requirements.txt```
   - For frontend issues, ensure all dependencies are installed:
-    ```bash
-    npm install
-    ```
+    ```npm install```
