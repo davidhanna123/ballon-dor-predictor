@@ -26,22 +26,26 @@ The Ballon d'Or Predictor is a web application that simulates the probability of
    ```
 
 2. Create and activate a virtual environment:
-On macOS/Linux:
-    ```
-    python3 -m venv venv
-    source venv/bin/activate
-   ```
-On Windows:
-    ```
-    python3 -m venv venv
-    venv\Scripts\activate
-   ```
+   - On macOS/Linux:
+     ```bash
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
+   - On Windows:
+     ```cmd
+     python3 -m venv venv
+     venv\Scripts\activate
+     ```
 
 3. Install the required dependencies:
-    ```pip install -r requirements.txt```
+    ```
+   pip install -r requirements.txt
+    ```
 
 4. Start the Flask backend:
-    ```python app.py```
+    ```
+   python app.py
+    ```
 
 ### Frontend Setup
 
